@@ -1,0 +1,5 @@
+# composer
+/vendor/
+
+# editor
+.idea

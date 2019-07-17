@@ -1,0 +1,13 @@
+{
+    "name": "hgsgtk/pmunit",
+    "description": "The PHP Mini xUnit Framework that implement xUnit architecture.",
+    "type": "library",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "hgsgtk",
+            "email": "hgsgtk@gmail.com"
+        }
+    ],
+    "require": {}
+}
