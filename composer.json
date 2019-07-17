@@ -1,6 +1,6 @@
 {
     "name": "hgsgtk/pmunit",
-    "description": "The PHP Mini xUnit Framework that implement xUnit architecture.",
+    "description": "The PHP Mini xUnit Framework.",
     "type": "library",
     "license": "MIT License",
     "authors": [

@@ -1,2 +1,2 @@
-# munit
-PHP Mini Testing Framework that implement xUnit architecture
+# pmunit
+PHP Mini xUnit Testing Framework
