@@ -1,5 +1,5 @@
 {
-    "name": "hgsgtk/pmunit",
+    "name": "hgsgtk/mpunit",
     "description": "The PHP Mini xUnit Framework.",
     "type": "library",
     "license": "MIT License",
@@ -11,5 +11,10 @@
     ],
     "require": {
         "php": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "mpunit\\": "src/"
+        }
     }
 }
