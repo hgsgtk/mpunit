@@ -1,2 +1,2 @@
-# pmunit
-PHP Mini xUnit Testing Framework
+# mpunit
+Mini PHP xUnit Testing Framework

@@ -1,6 +1,7 @@
+#!/usr/bin/env php
 <?php declare(strict_types=1);
 
-require __DIR__ . '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 // https://www.php.net/manual/ja/function.include.php
 $testing = include __DIR__ . '/bootstrap.php';
