@@ -1,2 +1,7 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+echo "Mini PHP xUnit" . PHP_EOL;
+MPUnit\Command::main();
