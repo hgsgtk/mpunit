@@ -16,5 +16,6 @@
         "psr-4": {
             "mpunit\\": "src/"
         }
-    }
+    },
+    "bin": ["bin/mpunit"]
 }
