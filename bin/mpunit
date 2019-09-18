@@ -10,18 +10,21 @@ ini_set('assert.exception', '1');
 
 // When assertion is failed, omit PHP warning
 assert_options(ASSERT_WARNING, '0');
+
 // Set callback function
 $testResult = new TestResult();
-assert_options(ASSERT_CALLBACK, [$testResult, 'addError']);
 
 chdir(__DIR__);
-
 
 foreach (glob('*_test.php') as $file) {
     try {
         include $file;
     } catch (\AssertionError $e) {
-        // Do nothing
+        $testResult->addError(
+            $e->getFile(),
+            $e->getLine(),
+            $e->getMessage()
+        );
     }
 }
 

@@ -12,10 +12,9 @@ final class TestResult
      *
      * @param $file
      * @param $line
-     * @param $code
      * @param null $desc
      */
-    public function addError($file, $line, $code, $desc = null): void
+    public function addError($file, $line, $desc = null): void
     {
         $this->result[] = [$file, $line, $desc];
     }
