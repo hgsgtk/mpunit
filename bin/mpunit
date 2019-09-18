@@ -3,5 +3,10 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-echo "Mini PHP xUnit" . PHP_EOL;
+// When assertion is failed, throw AssertError
+ini_set('assert.exception', '1');
+
+// When assertion is failed, omit PHP warning
+assert_options(ASSERT_WARNING, '0');
+
 MPUnit\Command::main();
