@@ -63,7 +63,9 @@ foreach ($testClassNames as $testClassName) {
 
     foreach ($testMethods as $testMethod) {
         try {
-            (new $testClassName)->$testMethod();
+            /** @var \MPUnit\TestCase $test */
+            $test = new $testClassName();
+            $test->$testMethod();
             $testResult->addSuccess();
             echo '.';
         } catch (AssertionError $e) {
