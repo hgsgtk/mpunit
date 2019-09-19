@@ -16,4 +16,5 @@ $argv = $_SERVER['argv'];
 $testDir = $argv[1] ?? 'tests';
 
 echo 'Mini PHP xUnit Testing.' . PHP_EOL . PHP_EOL;
-exit((new Command())->run($testDir));
+chdir($testDir);
+exit((new Command())->run());
