@@ -54,7 +54,9 @@ final class TestResult
             echo "CLASS: $class" . PHP_EOL;
             echo "FUNCTION: $function" . PHP_EOL;
             echo "CODE: {$code}" . PHP_EOL;
-            echo "DESC: {$desc}" . PHP_EOL;
+            if ($desc !== '') {
+                echo "DESC: {$desc}" . PHP_EOL;
+            }
             echo PHP_EOL;
         }
 

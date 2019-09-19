@@ -7,19 +7,17 @@ require_once __DIR__ . '/../src/fizzbuzz.php';
 final class FizzBuzzTest extends TestCase
 {
     function testFizzBuzz_1() {
-        assert('1' === $actual = fizzbuzz(1));
+        $actual = fizzbuzz(1);
+        $this->assertSame('1', $actual);
     }
 
     function testFizzBuzz_Fizz() {
-        assert('Fizz' === $actual = fizzbuzz(3));
+        $actual = fizzbuzz(3);
+        $this->assertSame('Fizz', $actual);
     }
 
     function testFizzBuzz_Buzz() {
-        assert('Fizz' === $actual = fizzbuzz(5));
+        $actual = fizzbuzz(5);
+        $this->assertSame('Buzz', $actual, 'testFizzBuzz should be Buzz');
     }
-
-    function testFizzBuzz_FizzBuzz() {
-        assert('Fizz' === $actual = fizzbuzz(10));
-    }
-
 }

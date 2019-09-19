@@ -22,6 +22,7 @@ $testDir = $argv[1] ?? 'tests';
 // TODO if not found, print no tests here.
 chdir($testDir);
 
+// TODO extract function that gather test class and functions.
 $testFiles = glob('*Test.php');
 foreach ($testFiles as $testFile) {
     require_once $testFile;
