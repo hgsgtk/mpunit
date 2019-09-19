@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-use MPUnit\Command;
-
 require __DIR__ . '/../vendor/autoload.php';
+
+use MPUnit\Command;
 
 // When assertion is failed, throw AssertError
 ini_set('assert.exception', '1');
