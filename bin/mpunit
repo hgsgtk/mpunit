@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-use MPUnit\TestResult;
+use MPUnit\Command;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -11,75 +11,9 @@ ini_set('assert.exception', '1');
 // When assertion is failed, omit PHP warning
 assert_options(ASSERT_WARNING, '0');
 
-// Set callback function
-$testResult = new TestResult();
-
-echo 'Mini PHP xUnit Testing.' . PHP_EOL . PHP_EOL;
-
+// Get test dir by argument
 $argv = $_SERVER['argv'];
 $testDir = $argv[1] ?? 'tests';
 
-// TODO if not found, print no tests here.
-chdir($testDir);
-
-// TODO extract function that gather test class and functions.
-$testFiles = glob('*Test.php');
-foreach ($testFiles as $testFile) {
-    require_once $testFile;
-}
-
-function isTestClass($className): bool
-{
-    $ref = new ReflectionClass($className);
-    if (!$ref->isUserDefined()) {
-        return false;
-    }
-    $parent = $ref->getParentClass();
-    if (!$parent) {
-        return false;
-    }
-    if ($parent->getName() !== 'MPUnit\TestCase') {
-        return false;
-    }
-    return true;
-}
-
-$testClassNames = array_filter(
-    get_declared_classes(),
-    'isTestClass'
-);
-
-foreach ($testClassNames as $testClassName) {
-    $testResult->incrementTestsCount();
-
-    $class = new ReflectionClass($testClassName);
-
-    $testMethods = array_filter(
-        array_column($class->getMethods(ReflectionMethod::IS_PUBLIC), 'name'),
-        function ($methodName) {
-            return 'test' === substr($methodName, 0, 4);
-        }
-    );
-
-    foreach ($testMethods as $testMethod) {
-        try {
-            /** @var \MPUnit\TestCase $test */
-            $test = new $testClassName();
-            $test->$testMethod();
-            $testResult->addSuccess();
-            echo '.';
-        } catch (AssertionError $e) {
-            $testResult->addFailure(
-                $e->getFile(),
-                $testClassName,
-                $testMethod,
-                $e->getLine(),
-                $e->getMessage()
-            );
-            echo 'F';
-        }
-    }}
-
-echo PHP_EOL . PHP_EOL;
-
-exit($testResult->endTest());
+echo 'Mini PHP xUnit Testing.' . PHP_EOL . PHP_EOL;
+exit((new Command())->run($testDir));
