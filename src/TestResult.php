@@ -7,8 +7,19 @@ final class TestResult
     /** @var array testing result */
     private $failures = [];
 
+    /** @var int $countTests */
+    private $countTests = 0;
+
     /** @var int testing assertions */
     private $countAssertions = 0;
+
+    /**
+     * Increment TestsCount.
+     */
+    public function incrementTestsCount(): void
+    {
+        $this->countTests++;
+    }
 
     /**
      * addSuccess add success result, but temporary just increment test counter.
@@ -41,7 +52,8 @@ final class TestResult
         if (!$this->failures) {
             // TODO test class and test case
             echo sprintf(
-                'OK (%d assertions)',
+                'OK (%d tests %d assertions)',
+                    $this->getTestCount(),
                     $this->getAssertionCount(),
                     ) . PHP_EOL;
             return 0;
@@ -62,7 +74,8 @@ final class TestResult
 
         echo 'FAILURE!' . PHP_EOL;
         echo sprintf(
-            'Assertions: %d, Failures: %d',
+            'Tests: %d Assertions: %d, Failures: %d',
+            $this->getTestCount(),
             $this->getAssertionCount(),
             count($this->failures)
         ) . PHP_EOL;
@@ -73,5 +86,10 @@ final class TestResult
     private function getAssertionCount(): int
     {
         return $this->countAssertions;
+    }
+
+    private function getTestCount(): int
+    {
+        return $this->countTests;
     }
 }

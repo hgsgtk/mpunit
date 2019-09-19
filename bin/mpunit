@@ -50,6 +50,8 @@ $testClassNames = array_filter(
 );
 
 foreach ($testClassNames as $testClassName) {
+    $testResult->incrementTestsCount();
+
     $class = new ReflectionClass($testClassName);
 
     $testMethods = array_filter(
@@ -74,8 +76,7 @@ foreach ($testClassNames as $testClassName) {
             );
             echo 'F';
         }
-    }
-}
+    }}
 
 echo PHP_EOL . PHP_EOL;
 
