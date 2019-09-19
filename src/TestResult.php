@@ -22,12 +22,14 @@ final class TestResult
      * addFailure by capturing assertion failure
      *
      * @param $file
+     * @param $class
+     * @param $function
      * @param $line
      * @param null $desc
      */
-    public function addFailure($file, $line, $desc = null): void
+    public function addFailure($file, $class, $function, $line, $desc = null): void
     {
-        $this->failures[] = [$file, $line, $desc];
+        $this->failures[] = [$file, $class, $function, $line, $desc];
         $this->countAssertions++;
     }
 
@@ -45,15 +47,18 @@ final class TestResult
             return 0;
         }
 
-        foreach ($this->failures as [$file, $line, $desc]) {
+        foreach ($this->failures as [$file, $class, $function, $line, $desc]) {
             $code = trim(file($file)[$line - 1]);
             echo 'FAILED' . PHP_EOL;
             echo "FILE: {$file} ({$line})" . PHP_EOL;
+            echo "CLASS: $class" . PHP_EOL;
+            echo "FUNCTION: $function" . PHP_EOL;
             echo "CODE: {$code}" . PHP_EOL;
             echo "DESC: {$desc}" . PHP_EOL;
+            echo PHP_EOL;
         }
 
-        echo PHP_EOL . 'FAILURE!' . PHP_EOL;
+        echo 'FAILURE!' . PHP_EOL;
         echo sprintf(
             'Assertions: %d, Failures: %d',
             $this->getAssertionCount(),

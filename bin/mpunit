@@ -22,31 +22,57 @@ $testDir = $argv[1] ?? 'tests';
 // TODO if not found, print no tests here.
 chdir($testDir);
 
-$testFiles = glob('*_test.php');
+$testFiles = glob('*Test.php');
 foreach ($testFiles as $testFile) {
     require_once $testFile;
 }
 
-function isTestFunc($funcName) {
-    return 'test' === substr($funcName, 0, 4);
+function isTestClass($className): bool
+{
+    $ref = new ReflectionClass($className);
+    if (!$ref->isUserDefined()) {
+        return false;
+    }
+    $parent = $ref->getParentClass();
+    if (!$parent) {
+        return false;
+    }
+    if ($parent->getName() !== 'MPUnit\TestCase') {
+        return false;
+    }
+    return true;
 }
 
-$testFunctions = array_filter(
-        get_defined_functions(true)['user'],
-        'isTestFunc'
+$testClassNames = array_filter(
+    get_declared_classes(),
+    'isTestClass'
 );
-foreach ($testFunctions as $func) {
-    try {
-        $func(); // TODO: constrain method signatures
-        $testResult->addSuccess();
-        echo '.';
-    } catch (\AssertionError $e) {
-        $testResult->addFailure(
-            $e->getFile(),
-            $e->getLine(),
-            $e->getMessage()
-        );
-        echo 'F';
+
+foreach ($testClassNames as $testClassName) {
+    $class = new ReflectionClass($testClassName);
+
+    $testMethods = array_filter(
+        array_column($class->getMethods(ReflectionMethod::IS_PUBLIC), 'name'),
+        function ($methodName) {
+            return 'test' === substr($methodName, 0, 4);
+        }
+    );
+
+    foreach ($testMethods as $testMethod) {
+        try {
+            (new $testClassName)->$testMethod();
+            $testResult->addSuccess();
+            echo '.';
+        } catch (AssertionError $e) {
+            $testResult->addFailure(
+                $e->getFile(),
+                $testClassName,
+                $testMethod,
+                $e->getLine(),
+                $e->getMessage()
+            );
+            echo 'F';
+        }
     }
 }
 
