@@ -14,6 +14,7 @@ final class Command
     /**
      * @param string $testDir
      * @return int
+     * @throws
      */
     public function run(string $testDir): int
     {
