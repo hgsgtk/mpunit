@@ -18,10 +18,9 @@ trait Assert
     /**
      * @param $expected
      * @param $actual
-     * @param string $message
      */
-    protected function assertSame($expected, $actual, string $message = ''): void
+    protected function assertSame($expected, $actual): void
     {
-        $this->assertThat($expected === $actual, $message);
+        $this->assertThat($expected === $actual, "actual: {$actual}, expected: {$expected}");
     }
 }

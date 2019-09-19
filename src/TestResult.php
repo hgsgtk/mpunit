@@ -2,10 +2,17 @@
 
 namespace MPUnit;
 
+/**
+ * Class TestResult
+ * @package MPUnit
+ */
 final class TestResult
 {
-    /** @var array testing result */
+    /** @var Failure[] $failures testing result */
     private $failures = [];
+
+    /** @var Pass[] $passed */
+    private $passes = [];
 
     /** @var int $countTests */
     private $countTests = 0;
@@ -22,26 +29,22 @@ final class TestResult
     }
 
     /**
-     * addSuccess add success result, but temporary just increment test counter.
+     * addPass add success result.
+     * @param Pass $pass
      */
-    public function addSuccess(): void
+    public function addPass(Pass $pass): void
     {
-        $this->countAssertions++;
+        $this->passes[] = $pass;
     }
 
     /**
      * addFailure by capturing assertion failure
      *
-     * @param $file
-     * @param $class
-     * @param $function
-     * @param $line
-     * @param null $desc
+     * @param Failure $failure
      */
-    public function addFailure($file, $class, $function, $line, $desc = null): void
+    public function addFailure(Failure $failure): void
     {
-        $this->failures[] = [$file, $class, $function, $line, $desc];
-        $this->countAssertions++;
+        $this->failures[] = $failure;
     }
 
     /**
@@ -50,42 +53,33 @@ final class TestResult
     public function endTest(): int
     {
         if (!$this->failures) {
-            // TODO test class and test case
             echo sprintf(
-                'OK (%d tests %d assertions)',
+                    'OK (%d tests %d assertions)',
                     $this->getTestCount(),
                     $this->getAssertionCount(),
                     ) . PHP_EOL;
             return 0;
         }
 
-        foreach ($this->failures as [$file, $class, $function, $line, $desc]) {
-            $code = trim(file($file)[$line - 1]);
-            echo 'FAILED' . PHP_EOL;
-            echo "FILE: {$file} ({$line})" . PHP_EOL;
-            echo "CLASS: $class" . PHP_EOL;
-            echo "FUNCTION: $function" . PHP_EOL;
-            echo "CODE: {$code}" . PHP_EOL;
-            if ($desc !== '') {
-                echo "DESC: {$desc}" . PHP_EOL;
-            }
+        foreach ($this->failures as $failure) {
+            echo $failure->errMessage();
             echo PHP_EOL;
         }
 
         echo 'FAILURE!' . PHP_EOL;
         echo sprintf(
-            'Tests: %d Assertions: %d, Failures: %d',
-            $this->getTestCount(),
-            $this->getAssertionCount(),
-            count($this->failures)
-        ) . PHP_EOL;
+                'Tests: %d Assertions: %d, Failures: %d',
+                $this->getTestCount(),
+                $this->getAssertionCount(),
+                count($this->failures)
+            ) . PHP_EOL;
 
         return 1;
     }
 
     private function getAssertionCount(): int
     {
-        return $this->countAssertions;
+        return count($this->passes) + count($this->failures);
     }
 
     private function getTestCount(): int

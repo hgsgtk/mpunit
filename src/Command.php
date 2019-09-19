@@ -60,15 +60,16 @@ final class Command
                 try {
                     $test = new $testClassName();
                     $test->$testMethod();
-                    $testResult->addSuccess();
+                    $testResult->addPass(new Pass());
                     echo '.';
                 } catch (\AssertionError $e) {
                     $testResult->addFailure(
-                        $e->getFile(),
-                        $testClassName,
-                        $testMethod,
-                        $e->getLine(),
-                        $e->getMessage()
+                        new Failure(
+                            $testClassName,
+                            $testMethod,
+                            $e->getMessage(),
+                            $e->getTraceAsString()
+                        )
                     );
                     echo 'F';
                 }

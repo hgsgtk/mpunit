@@ -6,8 +6,9 @@ require_once __DIR__ . '/../src/fizzbuzz.php';
 
 final class FizzBuzz1Test extends TestCase
 {
-    function testFizzBuzz_FizzBuzz() {
+    function testFizzBuzz_FizzBuzz()
+    {
         $actual = fizzbuzz(10);
-        $this->assertSame('FizzBuzzs', $actual);
+        $this->assertSame('FizzBuzz', $actual);
     }
 }
