@@ -5,18 +5,30 @@ namespace MPUnit;
 final class TestResult
 {
     /** @var array testing result */
-    private $result = [];
+    private $failures = [];
+
+    /** @var int testing assertions */
+    private $countAssertions = 0;
 
     /**
-     * addError by capturing assertion failure
+     * addSuccess add success result, but temporary just increment test counter.
+     */
+    public function addSuccess(): void
+    {
+        $this->countAssertions++;
+    }
+
+    /**
+     * addFailure by capturing assertion failure
      *
      * @param $file
      * @param $line
      * @param null $desc
      */
-    public function addError($file, $line, $desc = null): void
+    public function addFailure($file, $line, $desc = null): void
     {
-        $this->result[] = [$file, $line, $desc];
+        $this->failures[] = [$file, $line, $desc];
+        $this->countAssertions++;
     }
 
     /**
@@ -24,18 +36,35 @@ final class TestResult
      */
     public function endTest(): int
     {
-        if (!$this->result) {
-            echo 'ALL TEST PASSED.' . PHP_EOL;
+        if (!$this->failures) {
+            // TODO test class and test case
+            echo sprintf(
+                'OK (%d assertions)',
+                    $this->getAssertionCount(),
+                    ) . PHP_EOL;
             return 0;
         }
 
-        foreach ($this->result as [$file, $line, $desc]) {
+        foreach ($this->failures as [$file, $line, $desc]) {
             $code = trim(file($file)[$line - 1]);
             echo 'FAILED' . PHP_EOL;
             echo "FILE: {$file} ({$line})" . PHP_EOL;
             echo "CODE: {$code}" . PHP_EOL;
             echo "DESC: {$desc}" . PHP_EOL;
         }
+
+        echo PHP_EOL . 'FAILURE!' . PHP_EOL;
+        echo sprintf(
+            'Assertions: %d, Failures: %d',
+            $this->getAssertionCount(),
+            count($this->failures)
+        ) . PHP_EOL;
+
         return 1;
+    }
+
+    private function getAssertionCount(): int
+    {
+        return $this->countAssertions;
     }
 }
