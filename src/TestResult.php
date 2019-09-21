@@ -17,9 +17,6 @@ final class TestResult
     /** @var int $countTests */
     private $countTests = 0;
 
-    /** @var int testing assertions */
-    private $countAssertions = 0;
-
     /**
      * Increment TestsCount.
      */
