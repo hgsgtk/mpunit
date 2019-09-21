@@ -11,4 +11,10 @@ final class FizzBuzz1Test extends TestCase
         $actual = fizzbuzz(10);
         $this->assertSame('FizzBuzz', $actual);
     }
+
+    public function testFizzBuzz_FizzBuzz_15()
+    {
+        $actual = fizzbuzz(15);
+        $this->assertSame('Buzz', $actual);
+    }
 }

@@ -1,12 +1,17 @@
 <?php declare(strict_types=1);
 
 const FIZZ_BAZZ_MAP = [
-    3 => 'Fizz',
+    10 => 'FizzBuzz',
     5 => 'Buzz',
-    10 => 'FizzBuzz'
+    3 => 'Fizz',
 ];
 
 function fizzbuzz(int $n): string
 {
-    return FIZZ_BAZZ_MAP[$n] ?? (string)$n;
+    foreach (FIZZ_BAZZ_MAP as $num => $value) {
+        if (($n % $num) === 0) {
+            return $value;
+        }
+    }
+    return (string)$n;
 }
