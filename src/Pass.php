@@ -3,7 +3,6 @@
 
 namespace MPUnit;
 
-
 final class Pass
 {
 }

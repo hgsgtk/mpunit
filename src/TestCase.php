@@ -5,6 +5,7 @@ namespace MPUnit;
 
 /**
  * Class TestCase
+ *
  * @package MPUnit
  */
 abstract class TestCase

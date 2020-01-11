@@ -7,6 +7,7 @@ use ReflectionClass;
 
 /**
  * Class Command
+ *
  * @package MPUnit
  */
 final class Command
@@ -20,7 +21,7 @@ final class Command
         // Collect test files
         $testFiles = glob('*Test.php');
         foreach ($testFiles as $testFile) {
-            require_once $testFile;
+            include_once $testFile;
         }
 
         // Collect test classes

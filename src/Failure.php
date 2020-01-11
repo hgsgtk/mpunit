@@ -3,23 +3,31 @@
 
 namespace MPUnit;
 
-
 final class Failure
 {
-    /** @var string $testClass */
+    /**
+     * @var string $testClass
+     */
     private $testClass;
 
-    /** @var string $testMethod */
+    /**
+     * @var string $testMethod
+     */
     private $testMethod;
 
-    /** @var string $message */
+    /**
+     * @var string $message
+     */
     private $message;
 
-    /** @var string $trace */
+    /**
+     * @var string $trace
+     */
     private $trace;
 
     /**
      * Failure constructor.
+     *
      * @param string $testClass
      * @param string $testMethod
      * @param string $message
@@ -29,8 +37,8 @@ final class Failure
         string $testClass,
         string $testMethod,
         string $message,
-        string $trace)
-    {
+        string $trace
+    ) {
         $this->testClass = $testClass;
         $this->testMethod = $testMethod;
         $this->message= $message;
