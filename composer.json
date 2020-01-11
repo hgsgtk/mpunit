@@ -17,5 +17,11 @@
             "MPUnit\\": "src/"
         }
     },
-    "bin": ["bin/mpunit"]
+    "bin": ["bin/mpunit"],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "scripts": {
+        "cs-check": "phpcs --standard=PSR2 src"
+    }
 }

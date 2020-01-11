@@ -17,3 +17,5 @@ jobs:
         php-version: '7.4'
     - name: Install Dependencies
       run: composer install
+    - name: Check CodeSniffer
+      run: composer cs-check
