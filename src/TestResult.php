@@ -4,18 +4,22 @@ namespace MPUnit;
 
 /**
  * Class TestResult
+ *
  * @package MPUnit
  */
 final class TestResult
 {
-    /** @var Failure[] $failures testing result */
-    private $failures = [];
+    /**
+     * @var Failure[] $failures testing result
+     */
+    private array $failures = [];
 
-    /** @var Pass[] $passed */
-    private $passes = [];
+    /**
+     * @var Pass[] $passed
+     */
+    private array $passes = [];
 
-    /** @var int $countTests */
-    private $countTests = 0;
+    private int $countTests = 0;
 
     /**
      * Increment TestsCount.
@@ -27,6 +31,7 @@ final class TestResult
 
     /**
      * addPass add success result.
+     *
      * @param Pass $pass
      */
     public function addPass(Pass $pass): void
@@ -51,10 +56,10 @@ final class TestResult
     {
         if (!$this->failures) {
             echo sprintf(
-                    'OK (%d tests %d assertions)',
-                    $this->getTestCount(),
-                    $this->getAssertionCount(),
-                    ) . PHP_EOL;
+                'OK (%d tests %d assertions)',
+                $this->getTestCount(),
+                $this->getAssertionCount(),
+            ) . PHP_EOL;
             return 0;
         }
 
@@ -65,11 +70,11 @@ final class TestResult
 
         echo 'FAILURE!' . PHP_EOL;
         echo sprintf(
-                'Tests: %d Assertions: %d, Failures: %d',
-                $this->getTestCount(),
-                $this->getAssertionCount(),
-                count($this->failures)
-            ) . PHP_EOL;
+            'Tests: %d Assertions: %d, Failures: %d',
+            $this->getTestCount(),
+            $this->getAssertionCount(),
+            count($this->failures),
+        ) . PHP_EOL;
 
         return 1;
     }
