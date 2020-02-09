@@ -12,7 +12,6 @@ use ReflectionClass;
  */
 final class Command
 {
-    // See also https://github.com/sebastianbergmann/phpunit/blob/3426cfda812934f0c72d3fdc4dceb92ca14686b2/src/Util/Test.php#L54
     private const REGEX_DATA_PROVIDER = '/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/';
 
     /**
