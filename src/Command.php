@@ -47,10 +47,11 @@ final class Command
         $testResult = new TestResult();
 
         foreach ($testClassNames as $testClassName) {
+            // Fixme count test case automatically
             $testResult->incrementTestsCount();
 
+            // Collect test methods
             $testClassRef = new ReflectionClass($testClassName);
-
             $testMethods = array_filter(
                 array_column($testClassRef->getMethods(\ReflectionMethod::IS_PUBLIC), 'name'),
                 function ($methodName) {
@@ -58,10 +59,13 @@ final class Command
                 }
             );
 
+            // Execute test methods
             foreach ($testMethods as $testMethod) {
                 try {
-                    $test = new $testClassName();
-                    $test->$testMethod();
+                    $sut = new $testClassName();
+                    $sut->setUp();
+                    $sut->$testMethod();
+                    $sut->tearDown();
                     $testResult->addPass(new Pass());
                     echo '.';
                 } catch (\AssertionError $e) {
