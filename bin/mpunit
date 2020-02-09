@@ -18,7 +18,11 @@ $testDir = $argv[1] ?? 'tests';
 echo 'Mini PHP xUnit Testing.' . PHP_EOL . PHP_EOL;
 
 // Fixme Move into Command
-if (file_exists($testDir)) {
-    chdir($testDir);
+$testPath = realpath($testDir);
+if ($testPath) {
+    if (file_exists($testPath)) {
+        chdir($testPath);
+    }
 }
+
 exit((new Command())->run());
