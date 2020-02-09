@@ -21,6 +21,7 @@ final class Command
         // Collect test files
         $testFiles = glob('*Test.php');
         foreach ($testFiles as $testFile) {
+            // Fixme find ways not to need include files
             include_once $testFile;
         }
 
