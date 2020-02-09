@@ -12,6 +12,9 @@ use ReflectionClass;
  */
 final class Command
 {
+    // See also https://github.com/sebastianbergmann/phpunit/blob/3426cfda812934f0c72d3fdc4dceb92ca14686b2/src/Util/Test.php#L54
+    private const REGEX_DATA_PROVIDER = '/@dataProvider\s+([a-zA-Z0-9._:-\\\\x7f-\xff]+)/';
+
     /**
      * @return int
      * @throws
@@ -59,9 +62,40 @@ final class Command
                 }
             );
 
+            // phpdoc
+            $methods = $testClassRef->getMethods();
+            foreach ($methods as $method) {
+                $docComment = $method->getDocComment();
+                if (!$docComment) {
+                    continue;
+                }
+                if (preg_match_all(self::REGEX_DATA_PROVIDER, $docComment, $matches)) {
+                    /**
+                     * ..array(2) {
+                     *   [0]=>
+                     *   array(1) {
+                     *     [0]=>
+                     *     string(30) "@dataProvider providerFizzBuzz"
+                     *   }
+                     *   [1]=>
+                     *     array(1) {
+                     *     [0]=>
+                     *     string(16) "providerFizzBuzz"
+                     *   }
+                     * }
+                     * ....
+                     */
+                    $functionName = $matches[1];
+                    var_dump($functionName);
+
+                    // Fixme getData from dataProviders
+                }
+            }
+
             // Execute test methods
             foreach ($testMethods as $testMethod) {
                 try {
+                    /** @var TestCase $sut */
                     $sut = new $testClassName();
                     $sut->setUp();
                     $sut->$testMethod();
