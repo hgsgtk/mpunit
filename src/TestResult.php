@@ -19,6 +19,11 @@ final class TestResult
      */
     private array $passes = [];
 
+    /**
+     * @var Error[] $errors
+     */
+    private array $errors = [];
+
     private int $countTests = 0;
 
     /**
@@ -50,11 +55,19 @@ final class TestResult
     }
 
     /**
+     * @param Error $error
+     */
+    public function addError(Error $error): void
+    {
+        $this->errors[] = $error;
+    }
+
+    /**
      * @return int exit code
      */
     public function endTest(): int
     {
-        if (!$this->failures) {
+        if (!$this->failures && !$this->errors) {
             echo sprintf(
                 'OK (%d tests %d assertions)',
                 $this->getTestCount(),
@@ -68,12 +81,19 @@ final class TestResult
             echo PHP_EOL;
         }
 
+        foreach ($this->errors as $error) {
+            echo $error->errMessage();
+            echo PHP_EOL;
+        }
+
+
         echo 'FAILURE!' . PHP_EOL;
         echo sprintf(
-            'Tests: %d Assertions: %d, Failures: %d',
+            'Tests: %d Assertions: %d, Failures: %d Errors: %d',
             $this->getTestCount(),
             $this->getAssertionCount(),
             count($this->failures),
+            count($this->errors),
         ) . PHP_EOL;
 
         return 1;
