@@ -35,14 +35,10 @@ final class Command
                 if (!$ref->isUserDefined()) {
                     return false;
                 }
-                $parent = $ref->getParentClass();
-                if (!$parent) {
-                    return false;
+                if ($ref->isSubclassOf('MPUnit\TestCase')) {
+                    return true;
                 }
-                if ($parent->getName() !== 'MPUnit\TestCase') {
-                    return false;
-                }
-                return true;
+                return false;
             }
         );
 
