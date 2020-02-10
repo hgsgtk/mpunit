@@ -86,7 +86,6 @@ final class TestResult
             echo PHP_EOL;
         }
 
-
         echo 'FAILURE!' . PHP_EOL;
         echo sprintf(
             'Tests: %d Assertions: %d, Failures: %d Errors: %d',
