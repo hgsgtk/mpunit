@@ -23,32 +23,30 @@ final class TestRunner
 {
     /**
      * @return int exit code
+     * @throws \ReflectionException
      */
     public function doRun(): int
     {
-        // Collect test classes
-        $testClassNames = array_filter(
-            get_declared_classes(),
-            function ($className) {
-                $ref = new ReflectionClass($className);
-                if (!$ref->isUserDefined()) {
-                    return false;
-                }
-                if ($ref->isSubclassOf('MPUnit\TestCase')) {
-                    return true;
-                }
-                return false;
+        // Initialize test suite
+        $suite = new TestSuite();
+        foreach (get_declared_classes() as $get_declared_class) {
+            $classRef = new ReflectionClass($get_declared_class);
+            if (!$classRef->isUserDefined()) {
+                continue;
             }
-        );
-
-        $testResult = new TestResult();
-
-        foreach ($testClassNames as $testClassName) {
-            /** @var Test $testCase */
-            $testCase = new $testClassName();
-            $testResult = $testCase->run($testResult);
+            if (!$classRef->isSubclassOf('MPUnit\TestCase')) {
+                continue;
+            }
+            $suite->addTest(
+                new $get_declared_class()
+            );
         }
 
+        // Execute all TestCase object
+        $testResult = new TestResult();
+        $testResult = $suite->run($testResult);
+
+        // Reporting
         echo PHP_EOL . PHP_EOL;
         return $testResult->endTest();
     }
