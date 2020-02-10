@@ -137,6 +137,7 @@ abstract class TestCase implements Test
                     $e->getTraceAsString(),
                 )
             );
+            echo 'E';
         } finally {
             $testClass->tearDown();
         }
