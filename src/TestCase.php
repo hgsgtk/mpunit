@@ -127,6 +127,15 @@ abstract class TestCase implements Test
             );
             // Fixme print stdout outside TestCase
             echo 'F';
+        } catch (\Throwable $e) {
+            $testResult->addError(
+                new Error(
+                    $className,
+                    $testMethod,
+                    $e->getMessage(),
+                    $e->getTraceAsString(),
+                )
+            );
         }
         return $testResult;
     }
