@@ -8,11 +8,11 @@ final class FizzBuzzParameterizedTest extends TestCase
 {
     /**
      * @dataProvider providerFizzBuzz
+     * @param int $num
+     * @param string $expected
      */
-    public function testFizzBuzz()
+    public function testFizzBuzz(int $num, string $expected)
     {
-        $num = 10;
-        $expected = 'FizzBuzz';
         $actual = fizzbuzz($num);
 
         $this->assertSame($expected, $actual);
@@ -23,6 +23,7 @@ final class FizzBuzzParameterizedTest extends TestCase
         return [
             [10, 'FizzBuzz'],
             [15, 'Buzz'],
+            [1, '1'],
         ];
     }
 }
