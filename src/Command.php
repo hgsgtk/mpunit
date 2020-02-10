@@ -62,7 +62,7 @@ final class Command
                     // Search doc comment and provider
                     $refTestMethod = $testClassRef->getMethod($testMethod);
                     $docComment = $refTestMethod->getDocComment();
-                    if ($docComment &&
+                if ($docComment &&
                         preg_match_all(self::REGEX_DATA_PROVIDER, $docComment, $matches)
                         /**
                          * ..array(2) {
@@ -80,11 +80,11 @@ final class Command
                          * ....
                          */
                     ) {
-                        $providerFunc = $matches[1][0];
-                        $providedArgs = (new $testClassName())->$providerFunc();
-                    } else {
-                        $providedArgs = [];
-                    }
+                    $providerFunc = $matches[1][0];
+                    $providedArgs = (new $testClassName())->$providerFunc();
+                } else {
+                    $providedArgs = [];
+                }
 
                 if (count($providedArgs) !== 0) {
                     foreach ($providedArgs as $args) {
