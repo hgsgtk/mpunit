@@ -111,8 +111,9 @@ abstract class TestCase implements Test
             /** @var TestCase $testClass */
             $testClass = new $className();
             $testClass->setUp();
+
             $testClass->$testMethod(...$args);
-            $testClass->tearDown();
+
             $testResult->addPass(new Pass());
             // Fixme print stdout outside TestCase
             echo '.';
@@ -136,6 +137,8 @@ abstract class TestCase implements Test
                     $e->getTraceAsString(),
                 )
             );
+        } finally {
+            $testClass->tearDown();
         }
         return $testResult;
     }
